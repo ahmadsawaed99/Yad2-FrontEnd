@@ -1,0 +1,314 @@
+<div>
+
+<div class="title">
+  <div>
+    ראשי
+  </div>
+  <div style="color: #999999;">
+    / נדל״ן למכירה
+  </div>
+</div>
+<div class="offer-list-container">
+
+  <div class="dataTable-header">
+    <div class="date-filter" appClickOutside (clickOutSide)="closeSortBy()">
+      <div style="display: flex; align-items: center; font-size: .875rem; color: #363636;">מיין לפי</div>
+      <div class="dropdown1" >
+        <div style="display: flex; justify-content: space-between; width: 98%; align-items: center; " (click)="onSortBy()" >
+          <div style="display: flex;align-items: center; color: #363636; font-size: .875rem; padding-right: 0.5rem;">{{sortedBy}}</div>
+          <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" [ngClass]="isSortingBy ? 'dropdown-icon1 up-arrow' : 'dropdown-icon1'">
+        </div>
+        <!-- <div class="white-square"></div> -->
+        <div class="dropdown-list" *ngIf="isSortingBy">
+          <label for="radio1" class="radio" style="margin-right:-5rem ;" (click)="sortByDate()">
+            <input type="radio" name="r1" id="radio1" [checked]="SortedByDate"  class="radio_input" >
+            <div class="radio_radio"></div>
+            לפי תאריך
+          </label>
+          <label for="radio2" class="radio" (click)="sortByLowPrice()">
+            <input type="radio" name="r1" id="radio2" [checked]="SortedByLowPrice"  class="radio_input">
+            <div class="radio_radio"></div>
+            מחיר - מהזול ליקר
+          </label>
+          <label for="radio3" class="radio" (click)="sortByHighPrice()">
+            <input type="radio" name="r1" id="radio3" [checked]="SortedByHighPrice" class="radio_input">
+            <div class="radio_radio"></div>
+            מחיר - מהיקר לזול
+          </label>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <div class="price-filter" >
+
+      <div class="dropdown2" appClickOutside (clickOutSide)="closeFilter()" [style]="(filterWithPicture || filterWithPrice)? 'border:1px solid #ff7100;' : ''" >
+        <div style="display: flex;align-items: center;" (click)="onFilter()">
+          <img src="https://icon-library.com/images/icon-filter/icon-filter-5.jpg" alt="" class="dropdown-icon2">
+          <div style="display: flex;align-items: center; color: #363636; font-size: .875rem;" [style]="(filterWithPicture || filterWithPrice)? 'color:#ff7100;' : ''">סנן תוצאות</div>
+        </div>
+        <div class="filter"  *ngIf="isFiltering">
+          <div style="border-bottom: 1px solid #ccc; padding-bottom: 0.5rem; margin-top: 0.5rem;">
+            <div style="display: flex; align-items: center;">
+              <input type="checkbox" name=""   [(ngModel)]="filterWithPrice" class="checkbox" id="">
+              <div style="font-size: 14px;">עם המחיר</div>
+            </div>
+            <div style="display: flex; align-items: center;">
+              <input type="checkbox" name="" class="checkbox" id="" [(ngModel)]="filterWithPicture">
+              <div style="font-size: 14px;">עם תמונה</div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div (click)="clearFilter()" style="font-size: 14px; font-weight: 200; color: #ccc; padding-right: 0.5rem;" [style]="(filterWithPicture || filterWithPrice)? 'color:#363636; cursor:pointer;' : ''">ניקוי</div>
+            <div style="font-size: 14px; font-weight: 200; color: #ff7100; cursor: pointer; padding-left: 0.5rem;">סינון</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown2">
+        <img src="https://cdn3.iconfinder.com/data/icons/mail-useful-icons/32/location-512.png" alt="" class="dropdown-icon3">
+        <div style="display: flex;align-items: center; color: #363636; font-size: .875rem;">תצוגת מפה</div>
+      </div>
+
+
+    </div>
+  </div>
+
+<div *ngFor="let offer of offers;let i = index">
+  <app-images-gallery class="image-gallery" [images]="offer.images" [mainImage]="offer.mainImage" *ngIf="isVeiwingGallery" (closeGallery)="onCloseGallery()"></app-images-gallery>
+
+<div>
+  <div class="offer-container" *ngIf="!offer.isOpened" (click)="onOfferContainer(i)">
+    <div class="initial-details">
+      <div class="img-container">
+        <div  style=" z-index:1; width: 1.5rem; height: 1.5rem; background-color: white;display: flex; justify-content: center;align-items: center; border-radius: 50%; margin-top: -2rem; margin-left: -2rem;"><i class="fa-regular fa-heart heart-icon" ></i></div>
+        <img [src]="offer.mainImage" alt="" class="main-img">
+      </div>
+      <div  style=" width: 13rem; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-right: 0.6rem;">
+        <div style=" width: 100%; display: flex; justify-content: start; font-size: medium; text-align: right; ">{{offer.street}} {{offer.buildingNumber}}</div>
+        <span style=" text-align: right; width: 100%; font-size: 14px; white-space: nowrap; overflow: hidden;  text-overflow: ellipsis; ">{{offer.realstateTypeName}} , {{offer.city}}</span>
+      </div>
+    </div>
+    <div class="size-details">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+
+        <div style="height: 50%; display: flex; align-items:flex-end; padding: 0.1rem; justify-content: center;">{{offer.numberOfRooms}}</div>
+        <div style="height: 50%; display: flex; align-items:flex-start; padding: 0.1rem; justify-content: center; font-size: 14px; color: #363636;">חדרים</div>
+
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center;">
+
+        <div style="height: 50%; display: flex; align-items:flex-end; padding: 0.1rem; justify-content: center;">{{offer.floor}}</div>
+        <div style="height: 50%; display: flex; align-items:flex-start; padding: 0.1rem; justify-content: center; font-size: 14px; color: #363636;">קומה</div>
+
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center;">
+
+        <div style="height: 50%; display: flex; align-items:flex-end; padding: 0.1rem; justify-content: center;">{{offer.size}}</div>
+        <div style="height: 50%; display: flex; align-items:flex-start; padding: 0.1rem; justify-content: center; font-size: 14px; color: #363636;">מ״ר</div>
+
+      </div>
+    </div>
+
+    <div class="price">
+      <div style="display: flex; justify-content: flex-start;">
+        <img src="https://cdn1.iconfinder.com/data/icons/ios-edge-line-8/25/Open-New-Window-512.png" alt="" style="width: 14px; height: 14px;">
+      </div>
+      <div style="padding-left:0.5rem ;">
+        <div>{{offer.price | number}}</div>
+        <div style="font-size: 13px; color: #363636;">
+          <span class="more-options">לחצו לפרטים</span>
+          <span class="du" >עודכן היום</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<div *ngIf="offer.isOpened" >
+
+  <div class="full-offer-container" >
+    <div class="full-img-container" >
+      <div class="images-number-container" (click)="onVeiwingGallery()"><i class="fa-regular fa-image fa-xs"></i> <div style="font-size: 13px;">{{offer.images.length+1}}</div></div>
+
+      <div class="heart-container" style="margin-top: -5rem; margin-left: -8rem;"><i class="fa-regular fa-heart heart-icon" ></i>
+      </div>
+      <img (click)="onVeiwingGallery()" [src]="offer.mainImage" alt="" class="full-main-img">
+    </div>
+    <div class="adress" (click)="onOfferContainer(i)">
+      <div>
+        <div style="display: flex;">
+          <div >{{offer.street}} {{offer.buildingNumber}}</div>
+          <div style="display: flex; margin-right: 0.5rem; justify-content: center; align-items: flex-start;">
+            <img src="https://cdn3.iconfinder.com/data/icons/mail-useful-icons/32/location-512.png" alt="" class="dropdown-icon3" style="margin-top: -0.1rem;">
+            <div style="font-size: 13px; color: #ff7100; font-weight: bolder; margin-right: -0.1rem;">מפה</div>
+         </div>
+        </div>
+        <div style="width: 70%; overflow: hidden; text-overflow: ellipsis;">
+          <span style=" text-align: right; width: 2rem; font-size: 14px; white-space: nowrap;">{{offer.realstateTypeName}} , {{offer.city}}</span>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-around; width: 60%; height: 100%; align-items: flex-end;">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+
+          <div style="height: 50%; display: flex; align-items:flex-end; padding: 0.1rem; justify-content: center;">{{offer.numberOfRooms}}</div>
+          <div style="height: 50%; display: flex; align-items:flex-start; padding: 0.1rem; justify-content: center; font-size: 14px; color: #363636;">חדרים</div>
+
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center;">
+
+          <div style="height: 50%; display: flex; align-items:flex-end; padding: 0.1rem; justify-content: center;">{{offer.floor}}</div>
+          <div style="height: 50%; display: flex; align-items:flex-start; padding: 0.1rem; justify-content: center; font-size: 14px; color: #363636;">קומה</div>
+
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center;">
+
+          <div style="height: 50%; display: flex; align-items:flex-end; padding: 0.1rem; justify-content: center;">{{offer.size}}</div>
+          <div style="height: 50%; display: flex; align-items:flex-start; padding: 0.1rem; justify-content: center; font-size: 14px; color: #363636;">מ״ר</div>
+
+        </div>
+      </div>
+    </div>
+    <div class="full-price-container">
+      <div (click)="onOfferContainer(i)">
+        <div>{{offer.price | number}}</div>
+        <div style="font-size: 13px; color: #363636;">{{offer.lastUpdateDate}}</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr; grid-template-rows: 1fr; height: 100%;">
+
+
+          <input class="checkbox" [id]="'checkbox' + i" [name]="'checkbox' + i" type="checkbox" style="visibility: hidden;">
+          <label [for]="'checkbox' + i" class="contact-btn"><div style="font-size: 13px; display: flex; justify-content: space-between; align-items: center; width: 70%; white-space: nowrap;">הצגת מספר טלפון <i class="fa-solid fa-phone" style="color: white;"></i></div></label>
+          <div  class="contact-details" id="c">
+            <div class="name">{{offer.appartmentOwner}}</div>
+            <div class="phone">{{offer.ownerPhone}}</div>
+            <div class="mail">שליחת דוא״ל למפרסם</div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="more-details-container" >
+    <div class="describtion-container">
+      <div>תיאור הנכס</div>
+      <div class="describtion">
+          {{offer.description}}
+      </div>
+    </div>
+    <div class="additional-details-container">
+      <div class="additional-details">
+        <div class="item">מצב נכס
+          <div style="font-size: 13.5px; font-weight: bolder;">{{offer.realstateCondition}}</div>
+        </div>
+        <div class="item" >קומות בבניין
+          <div style="font-size: 13.5px; font-weight: bolder; ">{{offer.floor}}</div>
+
+        </div>
+        <div class="item" >חניות
+          <div style="font-size: 13.5px; font-weight: bolder; ">{{offer.parking}}</div>
+        </div>
+        <div class="item" >תאריך כניסה
+          <div style="font-size: 13.5px; font-weight: bolder; ">{{offer.entranceDate}}</div>
+        </div>
+        <div class="item">מרפסות
+          <div style="font-size: 13.5px; font-weight: bolder; ">{{offer.balconies}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="realstate-properties-container">
+      <div class="realstate-properties">
+        <div class="property" [style]="offer.extraFeatures.mizog?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-regular fa-snowflake"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;">מיזוג</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.sorgeem?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-table-cells"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;">סורגים</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.malit?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-elevator"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;">מעלית</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.cosher?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-sink"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;white-space: nowrap;">מטבח כשר</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.sunHeater?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-sun"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;">דוד שמש</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.gishaLnechim ?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-wheelchair"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px; white-space: nowrap;">גישה לנכים</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.meshopetzet ?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-paint-roller"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;">משופצת</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.memad ?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-person-shelter"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;">ממ״ד</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.machsan ?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-box-archive"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;">מחסן</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.tadiran ?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-fan"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px; white-space: nowrap;">מזגן תדיראן</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.merohetet ?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-toilet-portable"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;">ריהוט</div>
+        </div>
+        <div class="property" [style]="offer.extraFeatures.gamish ?'':'color:#B6B6B6;'">
+          <div>
+            <i class="fa-solid fa-money-bill-1"></i>
+          </div>
+          <div style="margin-right: 0.5rem; font-size: 13px;">גמיש</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+</div>

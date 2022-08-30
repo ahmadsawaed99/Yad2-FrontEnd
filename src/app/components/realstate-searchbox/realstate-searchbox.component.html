@@ -1,0 +1,228 @@
+<div class="container">
+  <div class="searchbox">
+    <div class="searchbox_header">
+
+      <h1 class="q">איזה נכס למכירה תרצו לחפש ?</h1>
+      <div style="cursor: pointer;">
+        <button class="btn">
+          <svg data-v-536cc0dd="" width="20" height="20" viewBox="0 0 20 20" class="bell_icon orange"><g data-v-536cc0dd="" transform="translate(2 1)"><ellipse data-v-536cc0dd="" cx="7.206" cy="14.44" fill="#999" stroke="#999" stroke-width=".926" rx="1.9" ry="1.878" transform="rotate(18 9.206 14.44)"></ellipse> <path data-v-536cc0dd="" fill="#999" stroke="#999" stroke-width=".5" d="M12.8231052,15.8320384 L1.59588336,12.1600933 C0.741326334,11.8806041 0.269836303,10.9686617 0.542985389,10.1224645 C0.815755737,9.27744069 1.72954622,8.81726719 2.58246568,9.09622075 C2.65893815,9.12123163 2.74258017,9.07909159 2.76739036,9.00223131 L3.8459642,5.66088349 C4.61481752,3.27902861 6.84212555,1.71637786 9.30527285,1.73266656 L9.38971013,1.47108564 C9.6874779,0.548621518 10.6844662,0.047077824 11.6140351,0.351100142 C12.5450902,0.655608518 13.0578164,1.64918572 12.7595436,2.57321436 L12.6750952,2.83482976 C14.6772473,4.27905538 15.566613,6.86145268 14.797923,9.24280184 L13.7193491,12.5841497 C13.6940463,12.6625362 13.7361292,12.7441081 13.8140718,12.7695998 C14.6656729,13.0481222 15.1376194,13.9612666 14.8647776,14.8065116 C14.5919484,15.6517178 13.6770509,16.1113276 12.8231052,15.8320384 Z" class="bell_stroke"></path> <path data-v-536cc0dd="" fill="#EEE" d="M9.59960261,2.62300607 L9.94192819,2.64576241 L10.2321685,1.74661782 C10.3809686,1.2856454 10.8799668,1.03461995 11.3443694,1.18650621 C11.8102812,1.33888607 12.0663829,1.83516822 11.9170852,2.29768218 L11.626842,3.19683568 L11.9170605,3.38096657 C13.7800716,4.56296579 14.6361763,6.85847156 13.9554646,8.96726966 L12.8768908,12.3086175 C12.7026263,12.8484768 13.0012781,13.4273719 13.5444061,13.6050059 C13.9311015,13.7314774 14.1461096,14.1474854 14.0223193,14.5309794 C13.8985247,14.9144864 13.481759,15.1238537 13.092771,14.9966324 L1.86554913,11.3246872 C1.47584389,11.1972313 1.26136338,10.7823892 1.38544376,10.3979967 C1.50929716,10.0143073 1.92520534,9.80486117 2.31279991,9.93162681 C2.85466526,10.1088478 3.43614333,9.81589092 3.60984873,9.27776349 L4.68842257,5.93641567 C5.369295,3.82711954 7.40211168,2.47692622 9.59960261,2.62300607 Z" class="bell_fill"></path></g></svg>
+          קבלו התראות במייל על החיפוש
+        </button>
+    </div>
+
+    </div>
+    <form action="" class="searchbox_form">
+      <div class="labels" appClickOutside (clickOutSide)="onCloseLocationSearch()">
+        <label for="" >חפשו אזור, עיר, שכונה או רחוב</label>
+        <input type="text" class="state-input" name="adress" placeholder="לדוגמה : הרצליה" (input)="stateSearchInput($event)" [(ngModel)]="adress">
+        <div class="location-search-list"  *ngIf="isLocationSearch">
+          <ul class="location-possible-results-list">
+            <li class="title">חפשו אזור, עיר, שכונה או רחוב</li>
+            <li class="li-title">
+              <div>רחוב</div>
+              <ul class="streets">
+                <li class="street" (click)="onAdress(street)" *ngFor="let street of streetsToDisplay; let i = index">
+                  <div>{{street}}</div>
+                  <div style="color: grey;">רחוב</div>
+                </li>
+              </ul>
+            </li>
+
+            <li class="li-title">
+              <div>עיר</div>
+              <ul class="streets">
+                <li class="street" *ngFor="let city of citiesToDisplay">
+                  <div>{{city}}</div>
+                  <div style="color: grey;">עיר</div>
+                </li>
+              </ul>
+            </li>
+            <li class="li-title">
+              <div>אזור</div>
+              <ul class="streets">
+                <li class="street" *ngFor="let area of areasToDisplay">
+                  <div>{{area}}</div>
+                  <div style="color: grey;">אזור</div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="labels"  appClickOutside (clickOutSide)="onCloseRealStateType()">
+        <label for="">סוג נכס</label>
+        <div class="type-input" (click)="onRealstateType()">
+          <div class="placeholder" *ngIf="numberOfAppartmentTypesHasBeenSelected + numberOfHouseTypesHasBeenSelected + numberOfOtherTypesHasBeenSelected === 0">
+            בחרו סוג נכס
+          </div>
+          <div style="font-size: 0.9rem;" *ngIf="numberOfAppartmentTypesHasBeenSelected + numberOfHouseTypesHasBeenSelected + numberOfOtherTypesHasBeenSelected > 0">
+           {{numberOfAppartmentTypesHasBeenSelected + numberOfHouseTypesHasBeenSelected + numberOfOtherTypesHasBeenSelected}}  סוגי נכסים
+          </div>
+          <div>
+            <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" [ngClass]="isSelectingRealstateType? 'dropdown-icon up-arrow ' : 'dropdown-icon'"  >
+          </div>
+        </div>
+        <div *ngIf="isSelectingRealstateType" class="select_realstate_type">
+          <ul class="realstate_type_list">
+            <li class="realstate_type_item">
+              <div style="padding:0 1rem; display: flex; flex-direction: row;">
+                <input class="checkbox"  type="checkbox" [checked]="isAllRealstateTypesSelected" (click)="selectAll()">
+              <div style="margin-top: 0.16rem;">
+                כל סוגי הנכסים
+              </div>
+              </div>
+            </li>
+            <li class="realstate_type_item">
+              <div style="padding:0 1rem; display: flex; flex-direction: row; width: 100%;" (click)="onAllAppartments()">
+                <input class="checkbox" type="checkbox" [checked]="isAllAppartementTypesSelected" >
+              <div style="margin-top: 0.16rem;display: flex; flex-direction: row; align-items: center;">
+                <div>דירות</div>
+                <div class="placeholder" style="margin-right: 9px;" *ngIf="numberOfAppartmentTypesHasBeenSelected > 0">נבחרו {{numberOfAppartmentTypesHasBeenSelected}} סוגים</div>
+              </div>
+              </div>
+              <div style="display: flex; justify-content: flex-end; margin-left: 1rem;" (click)="onAppartmentSubType()">
+                <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" [ngClass]="isSelectingAppartmentSubType? 'dropdown-icon up-arrow ' : 'dropdown-icon'" style="height: 18px; width: 18px;" >
+              </div>
+            </li>
+
+            <ul *ngIf="isSelectingAppartmentSubType" class="sub-types-items">
+              <li *ngFor="let item of appartmentTypes ; let i = index" class="sub-type-item">
+                  <div style="padding:0 1rem; display: flex; flex-direction: row; justify-content: space-between;">
+                    <input class="checkbox" type="checkbox" [checked]="appartmentTypesHasBeenChecked[i]" (click)="onAppartmentType(i)">
+                    <div style="margin-top: 0.16rem;">
+                       {{item}}
+                    </div>
+                  </div>
+              </li>
+            </ul>
+
+
+            <li class="realstate_type_item">
+              <div style="padding:0 1rem; display: flex; flex-direction: row; width: 100%;" (click)="onAllHouses()">
+                <input class="checkbox" type="checkbox" [checked]="isAllHouseTypesSelected"  >
+                <div style="margin-top: 0.16rem;display: flex; flex-direction: row; align-items: center;">
+                  <div>בתים</div>
+                  <div class="placeholder" style="margin-right: 9px;" *ngIf="numberOfHouseTypesHasBeenSelected > 0">נבחרו {{numberOfHouseTypesHasBeenSelected}} סוגים</div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: flex-end; margin-left: 1rem;" (click)="onHouseSubType()">
+                <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" [ngClass]="isSelectingHouseSubType? 'dropdown-icon up-arrow ' : 'dropdown-icon'" style="height: 18px; width: 18px;" >
+              </div>
+            </li>
+
+
+            <ul class="sub-types-items" *ngIf="isSelectingHouseSubType">
+              <li class="sub-type-item" *ngFor="let item of houseTypes ;let i =index">
+                  <div style="padding:0 1rem; display: flex; flex-direction: row; justify-content: space-between;">
+                    <input class="checkbox" type="checkbox" [checked]="houseTypesHasBeenChecked[i]" (click)="onHouseType(i)" >
+                    <div style="margin-top: 0.16rem;">
+                       {{item}}
+                    </div>
+                  </div>
+              </li>
+             </ul>
+
+            <li class="realstate_type_item">
+              <div style="padding:0 1rem; display: flex; flex-direction: row; width: 100%;" (click)="onAllOthers()">
+                <input class="checkbox" type="checkbox" [checked]="isAllOtherTypesSelected">
+                <div style="margin-top: 0.16rem;display: flex; flex-direction: row; align-items: center;">
+                  <div>סוגים נוספים</div>
+                  <div class="placeholder" style="margin-right: 7px;" *ngIf="numberOfOtherTypesHasBeenSelected > 0">נבחרו {{numberOfOtherTypesHasBeenSelected}} סוגים</div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: flex-end; margin-left: 1rem;" (click)="onOtherSubType()">
+                <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" [ngClass]="isSelectingOtherSubType? 'dropdown-icon up-arrow ' : 'dropdown-icon'" style="height: 18px; width: 18px;" >
+              </div>
+            </li>
+
+
+            <ul *ngIf="isSelectingOtherSubType" class="sub-types-items">
+              <li class="sub-type-item" *ngFor="let item of otherTypes; let i = index">
+                  <div style="padding:0 1rem; display: flex; flex-direction: row; justify-content: space-between;">
+                    <input class="checkbox" type="checkbox" [checked]="otherTypesHasBeenChecked[i]" (click)="onOtherType(i)" >
+                    <div style="margin-top: 0.16rem;">
+                       {{item}}
+                    </div>
+                  </div>
+              </li>
+             </ul>
+
+            <li (click)="onCloseRealStateType()" class="select-btn">
+              <div style="color: #ff7100; font-size: 1rem; font-weight: bolder; cursor: pointer;">בחירה</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="labels" appClickOutside (clickOutSide)="onCloseRooms()">
+        <label for="">חדרים</label>
+        <div class="rooms" (click)="onRooms()">
+          <div class="placeholder" *ngIf="minNumberOfRooms + maxNumberOfRooms  === 0 ">
+            חדרים
+          </div>
+          <div style="font-size: 14px;" *ngIf="maxNumberOfRooms  === 0 && minNumberOfRooms > 0 ">
+            מ- {{minNumberOfRooms}}
+          </div>
+          <div style="font-size: 14px;"  *ngIf="maxNumberOfRooms  > 0 && minNumberOfRooms === 0 ">
+            עד- {{maxNumberOfRooms}}
+          </div>
+          <div style="font-size: 14px;"  *ngIf="maxNumberOfRooms  > 0 && minNumberOfRooms > 0 ">
+            {{minNumberOfRooms}} - {{maxNumberOfRooms}}
+          </div>
+          <div >
+            <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" [ngClass]="isSelectingRooms? 'dropdown-icon up-arrow ' : 'dropdown-icon'"  >
+          </div>
+        </div>
+        <div class="rooms-dropdown" *ngIf="isSelectingRooms"  >
+          <div class="select-rooms">
+            <div  style="width: 50%;  border-left: 1px  solid rgb(181, 181, 181);">
+              <div style="display: flex; align-items: center;" (click)="onMinNumberOfRooms()">
+                <input type="text" placeholder="מ-" style="width: 2.8rem; border: none;" [value]="minNumberOfRooms > 0 ? minNumberOfRooms : ''"  name="minNumberOfRooms">
+                <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" [ngClass]="isSelectingMinNumberOfRooms?'dropdown-icon up-arrow' : 'dropdown-icon '" >
+              </div>
+              <ul *ngIf="isSelectingMinNumberOfRooms" class="select-box" style="margin-right:-0.5rem ; ">
+                <li class="option"  (click)="onMinNumberOfRooms()">הכל</li>
+                <li class="option" (click)="onMinRooms(item)" *ngFor="let item of minNumberOfRoomsList">{{item}}</li>
+              </ul>
+            </div>
+            <div  style="width: 50%;"  >
+              <div style=" display: flex; align-items: center;" (click)="onMaxNumberOfRooms()">
+                <input type="text" placeholder="עד-" style="width: 2.8rem; border: none;" [value]="maxNumberOfRooms > 0 ? maxNumberOfRooms : ''" name="maxNumberOfRooms">
+                <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" [ngClass]="isSelectingMaxNumberOfRooms?'dropdown-icon up-arrow' : 'dropdown-icon '">
+              </div>
+              <ul class="select-box"  *ngIf="isSelectingMaxNumberOfRooms">
+                <li class="option" (click)="onMaxNumberOfRooms()">הכל</li>
+                <li class="option" (click)="onMaxRooms(item)"  *ngFor="let item of numberOfRooms">{{item}}</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="labels">
+        <label for="">מחיר</label>
+        <div class="price">
+          <input type="number" class="minprice-input" placeholder="מ-" [(ngModel)]="minPrice" name="minPrice">
+          <input type="number" class="maxprice-input" placeholder="עד-">
+        </div>
+      </div>
+      <div class="labels">
+        <div *ngIf="numberOfChanges>0" class="freckle"></div>
+        <button [style]="numberOfChanges===0?'margin-top: 1.18rem;':''" class="advanced-search-button" (click)="onAdvancedSearchButton()">
+          <i class="fas fa-plus rotate" [style]="isAdvancedSearch? 'transform: rotate(45deg);    animation: animate 2s infinite linear;' :''"></i>
+           חיפוש מתקדם
+           <span *ngIf="numberOfChanges>0">({{numberOfChanges}})</span>
+          </button>
+      </div>
+      <div class="labels">
+        <button class="search-btn" >
+          <i class="fas fa-search" style="margin-left: 0.3rem;"></i>
+                  חיפוש
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+<app-advanced-search-box class="advanced-search" [style]="isAdvancedSearch?'':'display:none;'" (passNumberOfChanges)="numberOfFeatures($event)"></app-advanced-search-box>
+<app-offer-list></app-offer-list>

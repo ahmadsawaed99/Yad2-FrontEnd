@@ -1,0 +1,26 @@
+<div class="gallery-header">
+  <div class="close" (click)="onCloseGallery()">
+   <div style="margin-left: 1rem;">סגירת גלריה</div>
+   <div><i class="fa-solid fa-xmark"></i></div>
+  </div>
+  <div style="display: flex; margin-right: 3rem; ">
+    <div class="close" style="margin: 0;">
+      <div style="margin-left: 0.5rem;"><i class="fa-solid fa-map"></i></div>
+      <div>תצוגת רחוב</div>
+    </div>
+    <div class="close" style="margin: 0 1rem;">
+      <div style="margin-left: 0.5rem;"><i class="fa-solid fa-location-dot"></i></div>
+      <div>מפה</div>
+    </div>
+  </div>
+</div>
+
+<div class="images-container" (click)="onImage()">
+  <img [src]="mainImage" alt="" class="main-img" (click)="onImage()">
+
+  <div class="other-images">
+    <img [src]="item" alt="" class="secondary-img" *ngFor="let item of images">
+  </div>
+</div>
+
+<app-display-images [images]="images" (closeDisplay)="onCloseDisplay()" *ngIf="isVeiwingImages"></app-display-images>

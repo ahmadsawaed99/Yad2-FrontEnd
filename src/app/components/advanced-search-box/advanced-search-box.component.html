@@ -1,0 +1,142 @@
+<div class="container" (change)="onAll()" >
+  <div style="margin-bottom: 1rem;">מאפייני דירה</div>
+  <div class="extras-container" >
+    <div class="first-line">
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox"  name="chnia" id="" [(ngModel)]="appartmentFeatures.chnia">
+        <label for="">חניה</label>
+      </div>
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="malit" id="" [(ngModel)]="appartmentFeatures.malit">
+        <label for="">מעלית</label>
+      </div>
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="mizog" id="" [(ngModel)]="appartmentFeatures.mizog">
+        <label for="">מיזוג</label>
+      </div>
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="merpeset" id="" [(ngModel)]="appartmentFeatures.merpeset">
+        <label for="">מרפסת</label>
+      </div>
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="memad" id="" [(ngModel)]="appartmentFeatures.memad">
+        <label for="">ממ״ד</label>
+      </div>
+
+    </div>
+
+    <div class="second-line">
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="sorgim" id="" [(ngModel)]="appartmentFeatures.sorgeem">
+        <label for="">סורגים</label>
+      </div>
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="machsan" id="" [(ngModel)]="appartmentFeatures.machsan" >
+        <label for="">מחסן</label>
+      </div>
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="gishaLnechim" id="" [(ngModel)]="appartmentFeatures.gishaLnechim" >
+        <label for="">גישה לנכים</label>
+      </div>
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="meshopetset" id="" [(ngModel)]="appartmentFeatures.meshopetzet" >
+        <label for="">משופצת</label>
+      </div>
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="merohetet" id="" [(ngModel)]="appartmentFeatures.merohetet" >
+        <label for="">מרוהטת</label>
+      </div>
+
+    </div>
+
+    <div class="third-line">
+      <div class="isFurnished" >
+        <input type="checkbox" class="checkbox" name="bladiot" id="" [(ngModel)]="appartmentFeatures.bladiot">
+        <label for="">בבלעדיות</label>
+      </div>
+    </div>
+
+  </div>
+  <div class="appartment-details">
+    <div class="floor">
+
+      <div class="label">קומה</div>
+      <div class="floor-input-container">
+        <div class="floor-input" appClickOutside (clickOutSide)="onCloseFloor(1)">
+          <div >
+            <input type="number" placeholder="מ-" name="minFloor" [(ngModel)]="appartmentFeatures.minFloor" (click)="onMinFloor()" (input)="onAll()">
+            <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" class="dropdown-icon" [ngClass]="isSelectingMinFloor ? 'dropdown-icon up-arrow' : 'dropdown-icon'" (click)="onFloorArrow(1)">
+          </div>
+          <ul class="select-box" *ngIf="isSelectingMinFloor" >
+            <li class="option" (click)="onAllFloors(1)">הכל</li>
+            <li class="option" (click)="onBasement(1)">מרתף/פרטר</li>
+            <li class="option"  *ngFor="let item of minNumberOfFloorsList"(click)="onFloor(1 , item)" >{{item}}</li>
+          </ul>
+
+        </div>
+        <div class="floor-input" appClickOutside (clickOutSide)="onCloseFloor(2)">
+          <div >
+            <input type="number" placeholder="עד-" name="maxFloor" [(ngModel)]="appartmentFeatures.maxFloor" (click)="onMaxFloor()" (input)="onAll()">
+            <img src="https://cdn1.iconfinder.com/data/icons/arrows-vol-1-4/24/dropdown_arrow-512.png" alt="" [ngClass]="isSelectingMaxFloor ? 'dropdown-icon up-arrow' : 'dropdown-icon'" (click)="onFloorArrow(2)" >
+          </div>
+          <ul class="select-box" style="right: 18%;" *ngIf="isSelectingMaxFloor" >
+            <li class="option" (click)="onAllFloors(2)">הכל</li>
+            <li class="option" (click)="onBasement(2)">מרתף/פרטר</li>
+            <li class="option"  *ngFor="let item of numberOfFloors" (click)="onFloor(2 , item)">{{item}}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="floor">
+      <div class="label">גודל דירה (במ״ר)</div>
+      <div class="floor-input-container">
+        <div class="floor-input">
+          <input type="number" placeholder="מ-" name="minSize" [(ngModel)]="appartmentFeatures.minSize" (input)="onAll()">
+        </div>
+        <div class="floor-input">
+          <input type="number" placeholder="עד-" name="maxSize" [(ngModel)]="appartmentFeatures.maxSize" (input)="onAll()">
+        </div>
+      </div>
+    </div>
+
+    <div class="floor">
+      <div class="label" style="margin-right: -0.5rem;">תאריך כניסה</div>
+      <div class="entrance-date">
+        <div class="floor-input" style="width: 15rem; margin-right: 7rem; ">
+          <input type="date" style="width: 10rem; cursor: pointer;" name="entranceDate" [(ngModel)]="appartmentFeatures.entranceDate" [min]="dd" placeholder="החל מ- הזינו תאריך"  >
+        </div>
+        <div class="isFurnished" style="margin-bottom: -0.09rem;">
+          <input type="checkbox" class="checkbox" name="immediateEntrance" [(ngModel)]="appartmentFeatures.immediateEntrance" id="">
+        </div>
+        <div style="white-space: nowrap; margin-right: 0.2rem;  font-size: 14px; color: #363636;">
+          כניסה מיידית
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="free-search">
+    <div>
+      <div style="font-size: 14px; color: #363636;">חיפוש חופשי</div>
+      <div class="floor-input" style="width: 20rem;">
+        <input type="text" style="width: 19rem;" name="freeTextSearch" [(ngModel)]="appartmentFeatures.freeTextSearch" (input)="onAll()">
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+
+    <div></div>
+
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <button class="search-btn" (click)="onSearch()">חיפוש</button>
+    </div>
+
+    <div style="display: flex; justify-content: end; align-items: flex-end; margin-bottom: -0.7rem; cursor: pointer;" (click)="clear()">
+      <p style="font-size: 14px; color: #363636;">נקה</p>
+    </div>
+
+
+  </div>
+</div>
